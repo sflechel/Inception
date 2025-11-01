@@ -16,7 +16,7 @@ RUN wp core download --allow-root --path=/var/www/wordpress
 #	&& sed -i "s/password_here/${MARIADB_PASSWORD}/" /var/www/wordpress/wp-config.php\
 #	&& sed -i "s/localhost/mariadb/" /var/www/wordpress/wp-config.php
 
-COPY conf/wordpress.conf /etc/php/8.4/fpm/pool.d/www.conf
+COPY conf/wordpress.conf /etc/php84/php-fpm.d/www.conf
 COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
 EXPOSE 9000
