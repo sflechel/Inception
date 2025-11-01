@@ -17,6 +17,8 @@ services:
     image: mariadb
     container_name: mariadb
     env_file: .env
+    environment:
+      MARIADB_PASSWORD_FILE: "/run/secrets/db_pass"
     build:
       context: ./requirements/mariadb
     volumes:
@@ -28,6 +30,8 @@ services:
       test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=root"]
       interval: 5s
       retries: 10
+    secrets:
+      - db_pass
 
   wordpress:
     image: wordpress
@@ -35,6 +39,10 @@ services:
     build:
       context: ./requirements/wordpress
     env_file: .env
+    environment: 
+      MARIADB_PASSWORD_FILE: "/run/secrets/db_pass"
+      WP_ADMIN_PASSWORD_FILE: "/run/secrets/wp_admin_pass"
+      WP_USER_PASSWORD_FILE: "/run/secrets/wp_user_pass"
     volumes:
       - wordpress_volume:/var/www
     depends_on:
@@ -42,6 +50,10 @@ services:
     networks:
       - docker_network
     restart: on-failure
+    secrets:
+      - db_pass
+      - wp_user_pass
+      - wp_admin_pass
 
   nginx:
     image: nginx
@@ -61,3 +73,11 @@ services:
 networks:
   docker_network:
     driver: bridge
+
+secrets:
+  db_pass:
+    file: ../secrets/db_pass.txt
+  wp_user_pass:
+    file: ../secrets/wp_user_pass.txt
+  wp_admin_pass:
+    file: ../secrets/wp_admin_pass.txt
