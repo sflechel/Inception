@@ -8,11 +8,11 @@ do
 	sleep 1s
 done
 
-wp --allow-root config create \
-	--dbname="$MARIADB_DATABASE" \
-	--dbuser="$MARIADB_USER" \
-	--dbpass="$MARIADB_PASSWORD" \
-	--dbhost="mariadb" \
+#wp --allow-root --path=/var/www/wordpress config create \
+#	--dbname="$MARIADB_DATABASE" \
+#	--dbuser="$MARIADB_USER" \
+#	--dbpass="$MARIADB_PASSWORD" \
+#	--dbhost="mariadb" \
 
 wp core install --allow-root --path=/var/www/wordpress\
 	--url="${DOMAIN_NAME}" \

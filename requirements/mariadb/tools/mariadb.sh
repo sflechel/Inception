@@ -8,7 +8,7 @@ cd /var/lib/mysql
 
 mariadbd --user=root &
 
-until mariadb-admin ping --silent --skip-ssl --host="localhost" --user=root --password=${MARIADB_ROOT_PASSWORD}
+until mariadb-admin ping --silent --skip-ssl --host="localhost" --user=root
 do
 	sleep 0.5s
 done
@@ -19,7 +19,7 @@ done
 #EOF
 #fi
 
-mariadb --user=root --password=${MARIADB_ROOT_PASSWORD}  -h localhost <<EOF
+mariadb --user=root -h localhost <<EOF
 create database if not exists ${MARIADB_DATABASE};
 alter user 'root'@'localhost' identified by '${MARIADB_ROOT_PASSWORD}';
 create user if not exists '${MARIADB_USER}'@'%' identified by '${MARIADB_PASSWORD}';
