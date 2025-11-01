@@ -6,11 +6,13 @@ RUN apk add mariadb mariadb-client;
 
 WORKDIR /var/lib/mysql
 
-COPY conf/mariadb.conf /etc/my.cnf.d/
+COPY conf/mariadb.conf /etc/my.cnf
 RUN mariadb-install-db --auth-root-authentication-method=normal \
-	--skip-test-db --datadir=/var/lib/mysql;
+	--skip-test-db --datadir=/var/lib/mysql  --defaults-file=/etc/my.cnf;
 
 COPY tools/mariadb.sh /run
 RUN chmod +x /run/mariadb.sh
+
+EXPOSE 3306
 
 ENTRYPOINT [ "sh", "/run/mariadb.sh" ]

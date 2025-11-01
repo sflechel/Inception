@@ -1,8 +1,7 @@
 FROM alpine:3.21
 
 RUN apk update && apk upgrade \
-	&& apk add --no-cache php84 php84-phar php84-fpm php84-pdo php84-pdo_mysql php84-mysqli mariadb-client \
-	rm -rf /var/cache/apk/*
+	&& apk add --no-cache php84 php84-phar php84-fpm php84-pdo php84-pdo_mysql php84-mysqli mariadb-client
 RUN ln -s /usr/bin/php84 /usr/bin/php
 RUN sed -i "s/memory_limit.*/memory_limit = 312M/"  /etc/php84/php.ini
 
@@ -20,6 +19,7 @@ RUN mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php\
 COPY conf/wordpress.conf /etc/php/8.4/fpm/pool.d/www.conf
 COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
-RUN chmod +x /usr/local/bin/wordpress.sh
+EXPOSE 9000
 
+RUN chmod +x /usr/local/bin/wordpress.sh
 ENTRYPOINT ["bin/sh", "usr/local/bin/wordpress.sh"]

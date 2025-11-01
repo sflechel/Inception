@@ -16,8 +16,6 @@ services:
   mariadb:
     container_name: mariadb
     env_file: .env
-    ports:
-      - 3306
     build:
       context: ./requirements/mariadb
     volumes:
@@ -26,7 +24,7 @@ services:
       - docker_network
     restart: always
     healthcheck: 
-      test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=\"$MARIADB_USER\"", "--password=\"$MARIADB_PASSWORD\""]
+      test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=root", "--password=$MARIADB_ROOT_PASSWORD"]
       interval: 5s
       retries: 10
 
@@ -35,8 +33,6 @@ services:
     build:
       context: ./requirements/wordpress
     env_file: .env
-    ports:
-      - 9000
     volumes:
       - wordpress_volume:/var/www
     depends_on:

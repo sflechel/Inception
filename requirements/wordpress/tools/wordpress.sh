@@ -3,10 +3,10 @@
 if ! wp core is-installed --allow-root --path=/var/www/wordpress
 then
 
-#until mariadb-admin ping --skip-ssl --host=mariadb --user="$MARIADB_USER" --password="$MARIADB_PASSWORD"
-#do
-#	sleep 1s
-#done
+until mariadb-admin ping --skip-ssl --host=mariadb --user="$MARIADB_USER" --password="$MARIADB_PASSWORD"
+do
+	sleep 1s
+done
 
 wp --allow-root config create \
 	--dbname="$MARIADB_DATABASE" \
