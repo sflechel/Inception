@@ -14,6 +14,7 @@ volumes:
 
 services:
   mariadb:
+    image: mariadb
     container_name: mariadb
     env_file: .env
     build:
@@ -29,6 +30,7 @@ services:
       retries: 10
 
   wordpress:
+    image: wordpress
     container_name: wordpress
     build:
       context: ./requirements/wordpress
@@ -42,6 +44,7 @@ services:
     restart: on-failure
 
   nginx:
+    image: nginx
     container_name: nginx
     build:
       context: ./requirements/nginx
