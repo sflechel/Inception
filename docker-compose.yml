@@ -1,0 +1,64 @@
+volumes:
+  mariadb_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ~/data/mariadb
+  wordpress_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ~/data/wordpress
+
+services:
+  mariadb:
+    container_name: mariadb
+    env_file: .env
+    ports:
+      - 3306
+    build:
+      context: ./requirements/mariadb
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+    networks:
+      - docker_network
+    restart: always
+    healthcheck: 
+      test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=\"$MARIADB_USER\"", "--password=\"$MARIADB_PASSWORD\""]
+      interval: 5s
+      retries: 10
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+    env_file: .env
+    ports:
+      - 9000
+    volumes:
+      - wordpress_volume:/var/www
+    depends_on:
+      - mariadb
+    networks:
+      - docker_network
+    restart: always
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_volume:/var/www
+    networks:
+      - docker_network
+    restart: always
+
+networks:
+  docker_network:
+    driver: bridge
