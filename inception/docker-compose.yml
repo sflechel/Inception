@@ -4,13 +4,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ~/data/mariadb
+      device: /home/sflechel/data/mariadb
   wordpress_volume:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ~/data/wordpress
+      device: /home/sflechel/data/wordpress
 
 services:
   mariadb:
@@ -22,7 +22,7 @@ services:
       - mariadb_volume:/var/lib/mysql
     networks:
       - docker_network
-    restart: always
+    restart: on-failure
     healthcheck: 
       test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=root", "--password=$MARIADB_ROOT_PASSWORD"]
       interval: 5s
@@ -39,7 +39,7 @@ services:
       - mariadb
     networks:
       - docker_network
-    restart: always
+    restart: on-failure
 
   nginx:
     container_name: nginx
@@ -53,7 +53,7 @@ services:
       - wordpress_volume:/var/www
     networks:
       - docker_network
-    restart: always
+    restart: on-failure
 
 networks:
   docker_network:
