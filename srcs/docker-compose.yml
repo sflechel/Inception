@@ -25,7 +25,7 @@ services:
       - docker_network
     restart: on-failure
     healthcheck: 
-      test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=root", "--password=$MARIADB_ROOT_PASSWORD"]
+      test: ["CMD", "mariadb-admin", "ping", "--skip-ssl", "--host=localhost", "--user=root"]
       interval: 5s
       retries: 10
 

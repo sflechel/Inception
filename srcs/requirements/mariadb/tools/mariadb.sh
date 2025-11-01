@@ -13,15 +13,8 @@ do
 	sleep 0.5s
 done
 
-#if [ -z "$(ls /var/lib/mysql/$DB)" ]; then
-#	mariadb --user=root -h localhost <<EOF
-#create database if not exists $DB;
-#EOF
-#fi
-
 mariadb --user=root -h localhost <<EOF
 create database if not exists ${MARIADB_DATABASE};
-alter user 'root'@'localhost' identified by '${MARIADB_ROOT_PASSWORD}';
 create user if not exists '${MARIADB_USER}'@'%' identified by '${MARIADB_PASSWORD}';
 grant all privileges on ${MARIADB_DATABASE}.* to '${MARIADB_USER}'@'%';
 flush privileges;
