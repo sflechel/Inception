@@ -3,7 +3,6 @@
 set -e
 
 mkdir -p /run/mysqld/
-chown -R mysql:mysql /var/lib/mysql
 cd /var/lib/mysql
 
 mariadbd --user=root &

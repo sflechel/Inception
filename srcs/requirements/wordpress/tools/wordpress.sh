@@ -5,8 +5,6 @@ do
 	sleep 1s
 done
 
-#cat /var/www/wordpress/wp-config.php && 1
-
 wp config create --allow-root --path=/var/www/wordpress\
 	--dbname="$MARIADB_DATABASE" \
 	--dbuser="$MARIADB_USER" \

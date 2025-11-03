@@ -9,13 +9,6 @@ ADD https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /u
 RUN chmod +x /usr/local/bin/wp && mkdir -p /var/www/wordpress
 RUN wp core download --allow-root --path=/var/www/wordpress
 
-#RUN ls /var/www/wordpress && 1
-#RUN mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php\
-#	&& sed -i "s/database_name_here/${MARIADB_DATABASE}/" /var/www/wordpress/wp-config.php\
-#	&& sed -i "s/username_here/${MARIADB_USER}/" /var/www/wordpress/wp-config.php\
-#	&& sed -i "s/password_here/${MARIADB_PASSWORD}/" /var/www/wordpress/wp-config.php\
-#	&& sed -i "s/localhost/mariadb/" /var/www/wordpress/wp-config.php
-
 COPY conf/wordpress.conf /etc/php84/php-fpm.d/www.conf
 COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
