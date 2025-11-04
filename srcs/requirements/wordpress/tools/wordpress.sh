@@ -1,8 +1,8 @@
 #!/bin/sh
 
-until mariadb-admin ping --skip-ssl --host=mariadb --user="$MARIADB_USER" --password="$MARIADB_PASSWORD"
+until mariadb-admin ping --skip-ssl --host=mariadb --user="$MARIADB_USER" --password="$(cat $MARIADB_PASSWORD)"
 do
-	sleep 1s
+	sleep 2s
 done
 
 wp config create --allow-root --path=/var/www/wordpress\
