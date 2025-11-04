@@ -4,6 +4,9 @@ COMPOSE = docker compose #-p $(NAME)
 
 export COMPOSE_FILE
 
+secrets:
+	cp /home/sflechel/inception/secrets .
+
 all: up
 
 up: build
@@ -43,4 +46,4 @@ re: fclean up
 prune: fclean
 	docker system prune -af
 
-.PHONY: all up down build ps prune re volumes create clean logs reboot
+.PHONY: all up down build ps prune re volumes clean fclean logs reboot secrets

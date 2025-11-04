@@ -13,7 +13,7 @@ do
 done
 
 mariadb --user=root -h localhost <<EOF
-create database if not exists ${MARIADB_DATABASE};
+create database if not exists ${MARIADB_DATABASE;
 create user if not exists '${MARIADB_USER}'@'%' identified by '$(cat ${MARIADB_PASSWORD_FILE})';
 grant all privileges on ${MARIADB_DATABASE}.* to '${MARIADB_USER}'@'%';
 flush privileges;
